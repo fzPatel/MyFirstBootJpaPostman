@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.Controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,16 +6,21 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.example.model.Data;
+import com.example.service.DataService;
+import com.example.service.WelcomeService;
 
 @RestController 
 public class WelcomeController {
-
 
 @Autowired
 private WelcomeService service;
@@ -34,7 +39,11 @@ public String first()
 		return service.retrieveWelcomeMessage();
 	}
 
-	@GetMapping("/data")
+
+
+//------------------------------Services----------------------------------//
+
+@GetMapping("/data")
 	public List<Data> getdata() {
 		return dataservice.getAlldata();
 	}
@@ -62,6 +71,18 @@ public void deleteData(@PathVariable String name)
 {
 	dataservice.deleteData(name);	
 }
+
+//------------------------------Services----------------------------------
+
+
+@RequestMapping(value = "/login", method = RequestMethod.GET)
+public ModelAndView login(Model model) 
+{
+	return new ModelAndView("index");
+}
+
+
+
 
 
 
