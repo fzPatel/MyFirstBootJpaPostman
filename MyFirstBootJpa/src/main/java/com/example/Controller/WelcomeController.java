@@ -1,10 +1,9 @@
 package com.example.Controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,7 +19,7 @@ import com.example.model.Data;
 import com.example.service.DataService;
 import com.example.service.WelcomeService;
 
-@RestController 
+@Controller 
 public class WelcomeController {
 
 @Autowired
@@ -30,20 +30,20 @@ private DataService dataservice;
 @RequestMapping(value="/",method = RequestMethod.GET)
 public String first() 
 {
-	return "Hello Welcome to Spring Boot Application";
+	return "welcome to First Spring Boot App";
 }	
 
 @RequestMapping(value="/welcome",method = RequestMethod.GET)
+@ResponseBody
 	public String welcome() 
 	{
 		return service.retrieveWelcomeMessage();
 	}
 
-
-
 //------------------------------Services----------------------------------//
 
 @GetMapping("/data")
+@ResponseBody
 	public List<Data> getdata() {
 		return dataservice.getAlldata();
 	}
@@ -76,14 +76,17 @@ public void deleteData(@PathVariable String name)
 
 
 @RequestMapping(value = "/login", method = RequestMethod.GET)
-public ModelAndView login(Model model) 
+public String login(Model model) 
 {
-	return new ModelAndView("index");
+	return "index";
 }
 
+/*
+@RequestMapping("/")
+public String home(Map<String, Object> model) {
+	model.put("message", "HowToDoInJava Reader !!");
+	return "index";
+}
 
-
-
-
-
+*/
 }
